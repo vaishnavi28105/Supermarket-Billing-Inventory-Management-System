@@ -1,0 +1,79 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Supermarket Billing System</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+<div class="header">
+    <h1>Supermarket Billing & Inventory Management System</h1>
+</div>
+
+<div style="padding:20px;">
+
+    <div style="
+        display:flex;
+        gap:20px;
+        flex-wrap:wrap;
+        justify-content:center;
+    ">
+
+        <div class="card">
+            <h3>Categories</h3>
+            <h2>{{ total_categories }}</h2>
+        </div>
+
+        <div class="card">
+            <h3>Products</h3>
+            <h2>{{ total_products }}</h2>
+        </div>
+
+        <div class="card">
+            <h3>Customers</h3>
+            <h2>{{ total_customers }}</h2>
+        </div>
+
+        <div class="card">
+            <h3>Bills</h3>
+            <h2>{{ total_bills }}</h2>
+        </div>
+
+    </div>
+
+    <div style="text-align:center; margin-top:40px;">
+
+        <a href="/products">
+            <button>
+                Manage Products
+            </button>
+        </a>
+
+        <a href="/billing">
+            <button>
+                New Billing
+            </button>
+        </a>
+
+        <a href="/bill_history">
+            <button>
+                Bill History
+            </button>
+        </a>
+
+        <a href="/reports">
+            <button>
+                Reports
+            </button>
+        </a>
+
+    </div>
+
+</div>
+
+</body>
+</html>
+

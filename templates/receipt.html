@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Receipt</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+
+@media print {
+
+    button {
+        display: none;
+    }
+
+}
+
+</style>
+</head>
+<body>
+
+<div class="header">
+    <h1>Supermarket Receipt</h1>
+</div>
+
+<div style="padding:20px;">
+
+    <h3>Bill ID: {{ bill.bill_id }}</h3>
+
+    <p><strong>Customer:</strong> {{ customer.customer_name }}</p>
+
+    <p><strong>Contact:</strong> {{ customer.contact }}</p>
+
+    <p><strong>Email:</strong> {{ customer.email }}</p>
+
+    <p><strong>Payment:</strong> {{ payment_method }}</p>
+
+    <hr>
+
+    <table border="1" cellpadding="10">
+
+        <tr>
+            <th>Product</th>
+            <th>Price</th>
+            <th>Qty</th>
+            <th>Subtotal</th>
+        </tr>
+
+        {% for item in cart %}
+
+        <tr>
+            <td>{{ item.product_name }}</td>
+            <td>₹{{ item.price }}</td>
+            <td>{{ item.quantity }}</td>
+            <td>₹{{ item.subtotal }}</td>
+        </tr>
+
+        {% endfor %}
+
+    </table>
+
+    <hr>
+
+    <p><strong>Subtotal:</strong> ₹{{ subtotal }}</p>
+
+    <p><strong>Discount:</strong> ₹{{ discount }}</p>
+
+    <p><strong>GST (5%):</strong> ₹{{ gst }}</p>
+
+    <h2>Final Amount: ₹{{ final_amount }}</h2>
+
+    <br>
+
+        <button onclick="window.print()">
+        Download / Print Receipt
+    </button>
+
+    <a href="/">
+        <button>
+            Back To Dashboard
+        </button>
+    </a>
+
+</div>
+
+</body>
+</html>

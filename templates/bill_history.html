@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Bill History</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+<div class="header">
+    <h1>Bill History</h1>
+</div>
+
+<div style="padding:20px;">
+    <form method="GET" action="/bill_history">
+
+    <input type="text"
+           name="search"
+           placeholder="Search Bill ID or Customer"
+           value="{{ search }}">
+
+    <button type="submit">
+        Search
+    </button>
+
+</form>
+
+<br>
+
+<table border="1" cellpadding="10">
+
+<tr>
+    <th>Bill ID</th>
+    <th>Customer</th>
+    <th>Date</th>
+    <th>Amount</th>
+    <th>Action</th>
+</tr>
+
+{% for bill in bills %}
+
+<tr>
+
+    <td>{{ bill[0] }}</td>
+    <td>{{ bill[1] }}</td>
+    <td>{{ bill[2] }}</td>
+    <td>₹{{ bill[3] }}</td>
+
+    <td>
+        <a href="/receipt/{{ bill[0] }}">
+            <button>View</button>
+        </a>
+    </td>
+
+</tr>
+
+{% endfor %}
+
+</table>
+
+<br>
+
+<a href="/">
+    <button>Back To Dashboard</button>
+</a>
+
+</div>
+
+</body>
+</html>

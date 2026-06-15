@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Reports</title>
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+<div class="header">
+    <h1>Reports Dashboard</h1>
+</div>
+
+<div style="padding:20px;">
+
+<h2>Summary</h2>
+
+<p>Total Sales : ₹{{ total_sales }}</p>
+<p>Total Bills : {{ total_bills }}</p>
+<p>Total Customers : {{ total_customers }}</p>
+<p>Total Products : {{ total_products }}</p>
+
+<hr>
+
+<h2>Low Stock Products</h2>
+
+<table border="1" cellpadding="10">
+
+<tr>
+    <th>Product</th>
+    <th>Stock</th>
+</tr>
+
+{% for product in low_stock %}
+
+<tr>
+    <td>{{ product[0] }}</td>
+    <td>{{ product[1] }}</td>
+</tr>
+
+{% endfor %}
+
+</table>
+
+<hr>
+
+<h2>Top Selling Products</h2>
+
+<table border="1" cellpadding="10">
+
+<tr>
+    <th>Product</th>
+    <th>Total Sold</th>
+</tr>
+
+{% for product in top_products %}
+
+<tr>
+    <td>{{ product[0] }}</td>
+    <td>{{ product[1] }}</td>
+</tr>
+
+{% endfor %}
+
+</table>
+
+<br>
+
+<a href="/">
+    <button>Back To Dashboard</button>
+</a>
+
+</div>
+
+</body>
+</html>

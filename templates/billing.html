@@ -1,0 +1,239 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Billing</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+<div class="header">
+    <h1>Generate Bill</h1>
+</div>
+
+<div style="padding:20px;">
+
+    <h2>Customer Details</h2>
+
+    <form action="/add_to_cart" method="POST">
+
+        <label>Customer Name</label><br>
+        <input type="text"
+               name="customer_name"
+               value="{{ session.get('customer_name', '') }}">
+        <br><br>
+
+        <label>Contact Number</label><br>
+        <input type="text"
+               name="contact"
+               value="{{ session.get('contact', '') }}">
+        <br><br>
+
+        <label>Email</label><br>
+        <input type="email"
+               name="email"
+               value="{{ session.get('email', '') }}">
+        <br><br>
+
+        <label>Payment Method</label><br>
+
+        <select name="payment_method">
+
+            <option value="Cash"
+            {% if session.get('payment_method') == 'Cash' %}
+            selected
+            {% endif %}>
+                Cash
+            </option>
+
+            <option value="UPI"
+            {% if session.get('payment_method') == 'UPI' %}
+            selected
+            {% endif %}>
+                UPI
+            </option>
+
+            <option value="Card"
+            {% if session.get('payment_method') == 'Card' %}
+            selected
+            {% endif %}>
+                Card
+            </option>
+
+        </select>
+
+        <br><br>
+
+        <hr>
+
+        <h2>Add Products</h2>
+
+        <label>Category</label><br>
+
+        <select name="category_id" id="category_dropdown">
+
+            {% for category in categories %}
+
+            <option value="{{ category[0] }}">
+                {{ category[1] }}
+            </option>
+
+            {% endfor %}
+
+        </select>
+
+        <br><br>
+
+        <label>Product</label><br>
+
+        <select name="product_id" id="product_dropdown">
+
+            {% for product in products %}
+
+            <option
+                value="{{ product[0] }}"
+                data-category="{{ product[2] }}">
+
+                {{ product[1] }}
+                (₹{{ product[3] }})
+                - Stock: {{ product[4] }}
+
+            </option>
+
+            {% endfor %}
+
+        </select>
+
+        <br><br>
+
+        <label>Quantity</label><br>
+
+        <input type="number"
+               min="1"
+               name="quantity"
+               required>
+
+        <br><br>
+
+        <button type="submit">
+            Add To Cart
+        </button>
+
+    </form>
+
+    <hr>
+
+    <h2>Cart</h2>
+
+    {% if session.cart %}
+
+    <table border="1" cellpadding="10">
+
+        <tr>
+            <th>Product</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Subtotal</th>
+            <th>Action</th>
+        </tr>
+
+        {% for item in session.cart %}
+
+        <tr>
+            <td>{{ item.product_name }}</td>
+            <td>₹{{ item.price }}</td>
+            <td>{{ item.quantity }}</td>
+            <td>₹{{ item.subtotal }}</td>
+
+            <td>
+                <a href="/remove_from_cart/{{ loop.index0 }}">
+                    <button type="button">Remove</button>
+                </a>
+            </td>
+        </tr>
+
+        {% endfor %}
+
+    </table>
+
+    {% else %}
+
+    <p>Cart Empty</p>
+
+    {% endif %}
+
+    <hr>
+
+    <h3>Billing Summary</h3>
+
+    <p><strong>Subtotal:</strong> ₹{{ subtotal }}</p>
+
+    <form action="/generate_bill" method="POST">
+
+        <label>Discount Amount:</label><br>
+
+        <input type="number"
+               name="discount_amount"
+               value="0"
+               min="0">
+
+        <br><br>
+
+        <button type="submit">
+            Generate Bill
+        </button>
+
+    </form>
+
+</div>
+
+<script>
+
+function filterProducts() {
+
+    let category =
+        document.getElementById("category_dropdown").value;
+
+    let productDropdown =
+        document.getElementById("product_dropdown");
+
+    let options = productDropdown.options;
+
+    for(let i = 0; i < options.length; i++) {
+
+        let productCategory =
+            options[i].getAttribute("data-category");
+
+        if(productCategory == category) {
+
+            options[i].style.display = "";
+
+        } else {
+
+            options[i].style.display = "none";
+        }
+    }
+
+    for(let i = 0; i < options.length; i++) {
+
+        if(options[i].style.display != "none") {
+
+            productDropdown.value = options[i].value;
+            break;
+        }
+    }
+}
+
+document
+    .getElementById("category_dropdown")
+    .addEventListener("change", filterProducts);
+
+window.onload = filterProducts;
+
+</script>
+
+</body>
+</html>
+

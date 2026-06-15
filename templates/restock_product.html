@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Restock Product</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+<div class="header">
+    <h1>Restock Product</h1>
+</div>
+
+<div style="padding:20px;">
+
+    <h2>{{ product[1] }}</h2>
+
+    <p>Current Stock: {{ product[2] }}</p>
+
+    <form method="POST">
+
+        <label>Quantity to Add:</label><br>
+        <input type="number"
+               name="quantity_added"
+               min="1"
+               required>
+
+        <br><br>
+
+        <button type="submit">
+            Add Stock
+        </button>
+
+    </form>
+
+    <br>
+
+    <a href="/products">
+        <button>Back To Products</button>
+    </a>
+
+</div>
+
+</body>
+</html>
