@@ -69,5 +69,7 @@ Technologies Used
 * Email Receipt System
 * User Authentication
 
+  Update db_config.py with your own MySQL credentials before running the project.
+
  Author
 Vaishnavi Jadhav
